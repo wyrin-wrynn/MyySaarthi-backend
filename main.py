@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api.heartbeat import router as heartbeat_router
-from app.api.videoGen import router as videogen_router
+from api.heartbeat import router as heartbeat_router
+from api.videoGen import router as videogen_router
+import uvicorn
 
 app = FastAPI(
     title="Video Generation API",
@@ -26,3 +27,7 @@ app.include_router(videogen_router, prefix="/api/v1")
 @app.get("/")
 async def root():
     return {"message": "Welcome to the Video Generation API!"}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=3050, reload=True)

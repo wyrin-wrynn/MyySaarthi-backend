@@ -1,9 +1,9 @@
 import time
-from app.services.videoEngine.sourceGen import reddit, news, wiki, ytscript, generateSource, perplexity
-from app.services.videoEngine.scriptGen import createScript, createStoryboard
-from app.services.videoEngine.imageGen import createImage
-from app.services.videoEngine.audioGen import createTranscription, createAudioEdge
-from app.services.videoEngine.utils import db_utils, utils
+from services.videoEngine.sourceGen import reddit, news, wiki, ytscript, generateSource, perplexity
+from services.videoEngine.scriptGen import createScript, createStoryboard
+from services.videoEngine.imageGen import createImage
+from services.videoEngine.audioGen import createTranscription, createAudioEdge
+from services.videoEngine.utils import db_utils, utils
 
 def getSource(source, url, aspect="portrait", duration=60):
     source_handlers = {

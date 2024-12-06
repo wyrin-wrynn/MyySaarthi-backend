@@ -8,8 +8,6 @@ import json
 DEFAULT_VOICE = "en-US-AndrewMultilingualNeural"
 AUDIO_DIR = "/root/AIVideos/data/audio"  # Absolute path to the save location
 
-# Ensure the audio directory exists
-os.makedirs(AUDIO_DIR, exist_ok=True)
 
 # Async function to generate audio with edge-tts
 async def generate_audio_simple(text,id=0, voice=DEFAULT_VOICE):

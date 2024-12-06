@@ -1,7 +1,7 @@
 from openai import OpenAI
 from pydantic import BaseModel, Field
 from typing import List
-from app.services.videoEngine.scriptGen import prompts
+from services.videoEngine.scriptGen import prompts
 import os
 from dotenv import load_dotenv
 

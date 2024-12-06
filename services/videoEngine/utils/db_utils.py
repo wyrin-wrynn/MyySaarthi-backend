@@ -1,5 +1,5 @@
 import hashlib
-from app.db_utils import db_client  # Import the MongoDB client utility
+from db_utils import db_client  # Import the MongoDB client utility
 
 # MongoDB configuration
 DATABASE_NAME = "VideoGen"
