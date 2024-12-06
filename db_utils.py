@@ -4,7 +4,7 @@ import atexit
 from dotenv import load_dotenv
 import os
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
 class MongoDBClient:
@@ -15,8 +15,8 @@ class MongoDBClient:
     def connect(self):
         """Establish connection to MongoDB."""
         if not self.client:
-            self.client = MongoClient(self.uri, server_api=ServerApi('1'))
             try:
+                self.client = MongoClient(self.uri, server_api=ServerApi('1'))  # Add ServerApi
                 self.client.admin.command('ping')
                 print("Successfully connected to MongoDB!")
             except Exception as e:
@@ -27,6 +27,8 @@ class MongoDBClient:
         """Get the MongoDB client. Automatically connects if not already connected."""
         if not self.client:
             self.connect()
+        if self.client is None:
+            raise ConnectionError("MongoDB client is not connected.")
         return self.client
 
     def close(self):
@@ -39,7 +41,6 @@ class MongoDBClient:
 
 # Get MongoDB URI from .env file
 MONGO_URI = os.getenv("MONGO_URI")
-
 if not MONGO_URI:
     raise ValueError("MONGO_URI is not set in the .env file")
 

@@ -1,9 +1,10 @@
 import hashlib
 from db_utils import db_client  # Import the MongoDB client utility
+import os
 
 # MongoDB configuration
-DATABASE_NAME = "VideoGen"
-COLLECTION_NAME = "scripts"
+DATABASE_NAME = os.getenv("DATABASE_NAME")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME")
 
 def get_unique_filename(base_name):
     """Generates a unique identifier by hashing the input name."""
