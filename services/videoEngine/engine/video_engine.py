@@ -5,6 +5,8 @@ from services.videoEngine.imageGen import createImage
 from services.videoEngine.audioGen import createTranscription, createAudioEdge
 from services.videoEngine.utils import db_utils, utils
 
+from datetime import datetime
+
 def getSource(source, url, aspect="portrait", duration=60):
     source_handlers = {
         "Perplexity": perplexity.get_summary_from_query,
@@ -15,9 +17,15 @@ def getSource(source, url, aspect="portrait", duration=60):
         "Generate Random Topic": generateSource.get_content
     }
 
-    # Generate a unique filename for the project
-    filename = db_utils.get_unique_filename(url)
-    data = {'url': url, 'aspect': aspect, 'duration': int(duration)}
+    data = {
+        'url': url,
+        'aspect': aspect,
+        'duration': int(duration),
+        'created_time': datetime.now().isoformat(),  # Add created time in UTC format
+        'status': 'wip',  # Set default status to "wip"
+        'current_step': '1',  # Define the current step
+        'image_url': "" #url of image, to be updated later
+    }
 
     # Start timing
     start_time = time.time()
@@ -32,5 +40,7 @@ def getSource(source, url, aspect="portrait", duration=60):
     yield f"Got the Source - {round(time.time() - start_time, 2)} seconds"
     yield source_info
     print("Got source")
-    db_utils.create_project_document(data,filename)
+    
+    # Save the document with the updated fields
+    db_utils.create_project_document(data)
 

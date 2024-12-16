@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api.heartbeat import router as heartbeat_router
 from api.videoGen import router as videogen_router
+from api.videoSummarize import router as videoSummarize_router
 import uvicorn
 
 app = FastAPI(
@@ -22,6 +23,7 @@ app.add_middleware(
 # Include routes
 app.include_router(heartbeat_router, prefix="/api/v1")
 app.include_router(videogen_router, prefix="/api/v1")
+app.include_router(videoSummarize_router, prefix="/api/v1")
 
 # Root Endpoint
 @app.get("/")
@@ -30,4 +32,10 @@ async def root():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=3050, reload=True)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=3050,
+        reload=True,
+        timeout_keep_alive=600,  # Set timeout to 300 seconds (5 minutes)
+    )

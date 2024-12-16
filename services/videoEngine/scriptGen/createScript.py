@@ -10,17 +10,6 @@ load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_script(title: str, body: str):
-    class Scene(BaseModel):
-        id: str
-        narration: str
-        tone: str
-        theme: str
-        emotions: str
-        visuals: str
-        colorScheme: str
-
-    class Storyboard(BaseModel):
-        storyboard: List[Scene]
     
     client = OpenAI(api_key=api_key)
 
@@ -32,13 +21,13 @@ def generate_script(title: str, body: str):
 
     try:
         # Make a call to OpenAI's API with structured response parsing
-        completion = client.beta.chat.completions.parse(
+        completion = client.chat.completions.create(
             model="gpt-4o-mini",  # Adjust model name as required
             messages=[
                 {"role": "system", "content": prompt},
                 {"role": "user", "content": user_message}
             ],
-            response_format=Storyboard,  # Use Storyboard model for structured parsing
+            # Use Storyboard model for structured parsing
         )
 
         # Extract the parsed storyboard from the response
